@@ -77,7 +77,7 @@ private:
    void start_accept()
    {
     // socket
-     con_handler::pointer connection = con_handler::create(acceptor_.get_io_service());
+     con_handler::pointer connection = con_handler::create(socket()->get_executor().context());
 
     // asynchronous accept operation and wait for a new connection.
      acceptor_.async_accept(connection->socket(),

@@ -80,6 +80,10 @@ void	RegsTCPClient::start()
 		else if (_reg)
 			for (int i = 0; i < _reqs_length - 1; i++)
 				_reg->val[i]	=	_buffer[i + 4];  
+
+	for (int i = 0; i < _reqs_length; i++)
+		printf("0x%.2X\t", _buffer[i]);
+	printf("\n");
   	
 }
 

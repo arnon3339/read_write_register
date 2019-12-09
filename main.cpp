@@ -11,8 +11,8 @@ int main(int argc, char const *argv[])
 	int	i				=	0;
 	int mdmode			=	-1;
 	int rgmode			=	-1;
-	int	port			= 	1234;
-	char host[] 		= 	"127.0.0.1";
+	int	port			= 	49153;
+	char host[] 		= 	"192.168.0.100";
 	char name[] 		= 	"TCP connection";
 	uint8_t	*request	=	0;
 	int		reqlength	=	0;
