@@ -109,5 +109,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/wp3register.dir/DependInfo.cmake"
+  "CMakeFiles/registers_rw.dir/DependInfo.cmake"
   )

@@ -6,8 +6,8 @@
 
 int main(int argc, char const *argv[])
 {
-	int	port			= 	1234;
-	char host[] 		= 	"127.0.0.1";
+	int	port			= 	49153;
+	char host[] 		= 	"192.168.0.101";
 	boost::asio::io_service ios;
 	RegsTCPClient	*regstcp	=	new RegsTCPClient(ios, host, port);
 	RegisterRW		*rw_regs	=	new RegisterRW(regstcp);

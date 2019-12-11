@@ -66,6 +66,7 @@ private:
 	uint8_t							_seqnum;
 	bool							_mds_state[5]{false};
 	bool							_regs_state[30]{false};
+	int								_pruid;
 	std::string						_wregs_name[30]{""};
 	std::string						_md_list[5]{"global_regs", "offload",
 												"trigger_manager", "alpide_control",

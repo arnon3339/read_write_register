@@ -1,4 +1,4 @@
-# Install script for directory: /home/aso115/Documents/test/wp3
+# Install script for directory: /home/aso115/Documents/read_write_register
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/aso115/Documents/test/wp3/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/aso115/Documents/read_write_register/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

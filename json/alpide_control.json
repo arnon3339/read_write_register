@@ -8,8 +8,7 @@
         "reset": "async",
         "comp_library": "axi"
     },
-    "baseaddr": "0x8f000000",
-    "baseaddr_offset": "0x1000",
+    "baseaddr": "0x24110000",
     "register": [
         {
             "name": "write_ctrl",

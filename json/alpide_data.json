@@ -8,8 +8,7 @@
         "reset": "async",
         "comp_library": "axi"
     },
-    "baseaddr": "0x8f010000",
-    "baseaddr_offset": "0x1000",
+    "baseaddr": "0x22000000",
     "register": [
         {
             "name": "run_settings",

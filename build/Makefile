@@ -48,10 +48,10 @@ RM = /opt/Xilinx/SDK/2019.1/tps/lnx64/cmake-3.3.2/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/aso115/Documents/test/wp3
+CMAKE_SOURCE_DIR = /home/aso115/Documents/read_write_register
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/aso115/Documents/test/wp3/build
+CMAKE_BINARY_DIR = /home/aso115/Documents/read_write_register/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aso115/Documents/test/wp3/build/CMakeFiles /home/aso115/Documents/test/wp3/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aso115/Documents/read_write_register/build/CMakeFiles /home/aso115/Documents/read_write_register/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aso115/Documents/test/wp3/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aso115/Documents/read_write_register/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named wp3register
+# Target rules for targets named registers_rw
 
 # Build rule for target.
-wp3register: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 wp3register
-.PHONY : wp3register
+registers_rw: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 registers_rw
+.PHONY : registers_rw
 
 # fast build rule for target.
-wp3register/fast:
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/build
-.PHONY : wp3register/fast
+registers_rw/fast:
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/build
+.PHONY : registers_rw/fast
 
 main.o: main.cpp.o
 
@@ -129,7 +129,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/main.cpp.o
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -138,7 +138,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/main.cpp.i
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -147,8 +147,35 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/main.cpp.s
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/main.cpp.s
 .PHONY : main.cpp.s
+
+src/display_mdrg.o: src/display_mdrg.cpp.o
+
+.PHONY : src/display_mdrg.o
+
+# target to build an object file
+src/display_mdrg.cpp.o:
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/display_mdrg.cpp.o
+.PHONY : src/display_mdrg.cpp.o
+
+src/display_mdrg.i: src/display_mdrg.cpp.i
+
+.PHONY : src/display_mdrg.i
+
+# target to preprocess a source file
+src/display_mdrg.cpp.i:
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/display_mdrg.cpp.i
+.PHONY : src/display_mdrg.cpp.i
+
+src/display_mdrg.s: src/display_mdrg.cpp.s
+
+.PHONY : src/display_mdrg.s
+
+# target to generate assembly for a file
+src/display_mdrg.cpp.s:
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/display_mdrg.cpp.s
+.PHONY : src/display_mdrg.cpp.s
 
 src/init_regs.o: src/init_regs.cpp.o
 
@@ -156,7 +183,7 @@ src/init_regs.o: src/init_regs.cpp.o
 
 # target to build an object file
 src/init_regs.cpp.o:
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/src/init_regs.cpp.o
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/init_regs.cpp.o
 .PHONY : src/init_regs.cpp.o
 
 src/init_regs.i: src/init_regs.cpp.i
@@ -165,7 +192,7 @@ src/init_regs.i: src/init_regs.cpp.i
 
 # target to preprocess a source file
 src/init_regs.cpp.i:
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/src/init_regs.cpp.i
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/init_regs.cpp.i
 .PHONY : src/init_regs.cpp.i
 
 src/init_regs.s: src/init_regs.cpp.s
@@ -174,7 +201,7 @@ src/init_regs.s: src/init_regs.cpp.s
 
 # target to generate assembly for a file
 src/init_regs.cpp.s:
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/src/init_regs.cpp.s
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/init_regs.cpp.s
 .PHONY : src/init_regs.cpp.s
 
 src/pru_register.o: src/pru_register.cpp.o
@@ -183,7 +210,7 @@ src/pru_register.o: src/pru_register.cpp.o
 
 # target to build an object file
 src/pru_register.cpp.o:
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/src/pru_register.cpp.o
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/pru_register.cpp.o
 .PHONY : src/pru_register.cpp.o
 
 src/pru_register.i: src/pru_register.cpp.i
@@ -192,7 +219,7 @@ src/pru_register.i: src/pru_register.cpp.i
 
 # target to preprocess a source file
 src/pru_register.cpp.i:
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/src/pru_register.cpp.i
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/pru_register.cpp.i
 .PHONY : src/pru_register.cpp.i
 
 src/pru_register.s: src/pru_register.cpp.s
@@ -201,7 +228,7 @@ src/pru_register.s: src/pru_register.cpp.s
 
 # target to generate assembly for a file
 src/pru_register.cpp.s:
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/src/pru_register.cpp.s
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/pru_register.cpp.s
 .PHONY : src/pru_register.cpp.s
 
 src/register_module.o: src/register_module.cpp.o
@@ -210,7 +237,7 @@ src/register_module.o: src/register_module.cpp.o
 
 # target to build an object file
 src/register_module.cpp.o:
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/src/register_module.cpp.o
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/register_module.cpp.o
 .PHONY : src/register_module.cpp.o
 
 src/register_module.i: src/register_module.cpp.i
@@ -219,7 +246,7 @@ src/register_module.i: src/register_module.cpp.i
 
 # target to preprocess a source file
 src/register_module.cpp.i:
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/src/register_module.cpp.i
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/register_module.cpp.i
 .PHONY : src/register_module.cpp.i
 
 src/register_module.s: src/register_module.cpp.s
@@ -228,8 +255,89 @@ src/register_module.s: src/register_module.cpp.s
 
 # target to generate assembly for a file
 src/register_module.cpp.s:
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/src/register_module.cpp.s
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/register_module.cpp.s
 .PHONY : src/register_module.cpp.s
+
+src/register_r.o: src/register_r.cpp.o
+
+.PHONY : src/register_r.o
+
+# target to build an object file
+src/register_r.cpp.o:
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/register_r.cpp.o
+.PHONY : src/register_r.cpp.o
+
+src/register_r.i: src/register_r.cpp.i
+
+.PHONY : src/register_r.i
+
+# target to preprocess a source file
+src/register_r.cpp.i:
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/register_r.cpp.i
+.PHONY : src/register_r.cpp.i
+
+src/register_r.s: src/register_r.cpp.s
+
+.PHONY : src/register_r.s
+
+# target to generate assembly for a file
+src/register_r.cpp.s:
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/register_r.cpp.s
+.PHONY : src/register_r.cpp.s
+
+src/register_rw.o: src/register_rw.cpp.o
+
+.PHONY : src/register_rw.o
+
+# target to build an object file
+src/register_rw.cpp.o:
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/register_rw.cpp.o
+.PHONY : src/register_rw.cpp.o
+
+src/register_rw.i: src/register_rw.cpp.i
+
+.PHONY : src/register_rw.i
+
+# target to preprocess a source file
+src/register_rw.cpp.i:
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/register_rw.cpp.i
+.PHONY : src/register_rw.cpp.i
+
+src/register_rw.s: src/register_rw.cpp.s
+
+.PHONY : src/register_rw.s
+
+# target to generate assembly for a file
+src/register_rw.cpp.s:
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/register_rw.cpp.s
+.PHONY : src/register_rw.cpp.s
+
+src/register_w.o: src/register_w.cpp.o
+
+.PHONY : src/register_w.o
+
+# target to build an object file
+src/register_w.cpp.o:
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/register_w.cpp.o
+.PHONY : src/register_w.cpp.o
+
+src/register_w.i: src/register_w.cpp.i
+
+.PHONY : src/register_w.i
+
+# target to preprocess a source file
+src/register_w.cpp.i:
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/register_w.cpp.i
+.PHONY : src/register_w.cpp.i
+
+src/register_w.s: src/register_w.cpp.s
+
+.PHONY : src/register_w.s
+
+# target to generate assembly for a file
+src/register_w.cpp.s:
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/register_w.cpp.s
+.PHONY : src/register_w.cpp.s
 
 src/regs_tcp_client.o: src/regs_tcp_client.cpp.o
 
@@ -237,7 +345,7 @@ src/regs_tcp_client.o: src/regs_tcp_client.cpp.o
 
 # target to build an object file
 src/regs_tcp_client.cpp.o:
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/src/regs_tcp_client.cpp.o
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/regs_tcp_client.cpp.o
 .PHONY : src/regs_tcp_client.cpp.o
 
 src/regs_tcp_client.i: src/regs_tcp_client.cpp.i
@@ -246,7 +354,7 @@ src/regs_tcp_client.i: src/regs_tcp_client.cpp.i
 
 # target to preprocess a source file
 src/regs_tcp_client.cpp.i:
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/src/regs_tcp_client.cpp.i
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/regs_tcp_client.cpp.i
 .PHONY : src/regs_tcp_client.cpp.i
 
 src/regs_tcp_client.s: src/regs_tcp_client.cpp.s
@@ -255,7 +363,7 @@ src/regs_tcp_client.s: src/regs_tcp_client.cpp.s
 
 # target to generate assembly for a file
 src/regs_tcp_client.cpp.s:
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/src/regs_tcp_client.cpp.s
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/regs_tcp_client.cpp.s
 .PHONY : src/regs_tcp_client.cpp.s
 
 src/rqs_generator.o: src/rqs_generator.cpp.o
@@ -264,7 +372,7 @@ src/rqs_generator.o: src/rqs_generator.cpp.o
 
 # target to build an object file
 src/rqs_generator.cpp.o:
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/src/rqs_generator.cpp.o
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/rqs_generator.cpp.o
 .PHONY : src/rqs_generator.cpp.o
 
 src/rqs_generator.i: src/rqs_generator.cpp.i
@@ -273,7 +381,7 @@ src/rqs_generator.i: src/rqs_generator.cpp.i
 
 # target to preprocess a source file
 src/rqs_generator.cpp.i:
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/src/rqs_generator.cpp.i
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/rqs_generator.cpp.i
 .PHONY : src/rqs_generator.cpp.i
 
 src/rqs_generator.s: src/rqs_generator.cpp.s
@@ -282,35 +390,8 @@ src/rqs_generator.s: src/rqs_generator.cpp.s
 
 # target to generate assembly for a file
 src/rqs_generator.cpp.s:
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/src/rqs_generator.cpp.s
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/src/rqs_generator.cpp.s
 .PHONY : src/rqs_generator.cpp.s
-
-src/wp3read_module.o: src/wp3read_module.cpp.o
-
-.PHONY : src/wp3read_module.o
-
-# target to build an object file
-src/wp3read_module.cpp.o:
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/src/wp3read_module.cpp.o
-.PHONY : src/wp3read_module.cpp.o
-
-src/wp3read_module.i: src/wp3read_module.cpp.i
-
-.PHONY : src/wp3read_module.i
-
-# target to preprocess a source file
-src/wp3read_module.cpp.i:
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/src/wp3read_module.cpp.i
-.PHONY : src/wp3read_module.cpp.i
-
-src/wp3read_module.s: src/wp3read_module.cpp.s
-
-.PHONY : src/wp3read_module.s
-
-# target to generate assembly for a file
-src/wp3read_module.cpp.s:
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/src/wp3read_module.cpp.s
-.PHONY : src/wp3read_module.cpp.s
 
 # Help Target
 help:
@@ -320,10 +401,13 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... wp3register"
+	@echo "... registers_rw"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... src/display_mdrg.o"
+	@echo "... src/display_mdrg.i"
+	@echo "... src/display_mdrg.s"
 	@echo "... src/init_regs.o"
 	@echo "... src/init_regs.i"
 	@echo "... src/init_regs.s"
@@ -333,15 +417,21 @@ help:
 	@echo "... src/register_module.o"
 	@echo "... src/register_module.i"
 	@echo "... src/register_module.s"
+	@echo "... src/register_r.o"
+	@echo "... src/register_r.i"
+	@echo "... src/register_r.s"
+	@echo "... src/register_rw.o"
+	@echo "... src/register_rw.i"
+	@echo "... src/register_rw.s"
+	@echo "... src/register_w.o"
+	@echo "... src/register_w.i"
+	@echo "... src/register_w.s"
 	@echo "... src/regs_tcp_client.o"
 	@echo "... src/regs_tcp_client.i"
 	@echo "... src/regs_tcp_client.s"
 	@echo "... src/rqs_generator.o"
 	@echo "... src/rqs_generator.i"
 	@echo "... src/rqs_generator.s"
-	@echo "... src/wp3read_module.o"
-	@echo "... src/wp3read_module.i"
-	@echo "... src/wp3read_module.s"
 .PHONY : help
 
 

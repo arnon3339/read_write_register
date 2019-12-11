@@ -132,7 +132,6 @@ void ReqGenerator::gen_write_register(const pru_register *regs)
     _request[_rqslength++]  =   len.u8length[0];
     _request[_rqslength++]  =   cmdtype::fmwrw;
     _request[_rqslength++]  =   cmdtype::writeop;
-    _request[_rqslength++]  =   regs->baseaddr;
     _request[_rqslength++]  =   addr.u8addr[3];
     _request[_rqslength++]  =   addr.u8addr[2];
     _request[_rqslength++]  =   addr.u8addr[1];

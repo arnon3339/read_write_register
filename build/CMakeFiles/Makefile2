@@ -54,45 +54,45 @@ RM = /opt/Xilinx/SDK/2019.1/tps/lnx64/cmake-3.3.2/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/aso115/Documents/test/wp3
+CMAKE_SOURCE_DIR = /home/aso115/Documents/read_write_register
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/aso115/Documents/test/wp3/build
+CMAKE_BINARY_DIR = /home/aso115/Documents/read_write_register/build
 
 #=============================================================================
-# Target rules for target CMakeFiles/wp3register.dir
+# Target rules for target CMakeFiles/registers_rw.dir
 
 # All Build rule for target.
-CMakeFiles/wp3register.dir/all:
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/depend
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aso115/Documents/test/wp3/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Built target wp3register"
-.PHONY : CMakeFiles/wp3register.dir/all
+CMakeFiles/registers_rw.dir/all:
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/depend
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/aso115/Documents/read_write_register/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11 "Built target registers_rw"
+.PHONY : CMakeFiles/registers_rw.dir/all
 
 # Include target in all.
-all: CMakeFiles/wp3register.dir/all
+all: CMakeFiles/registers_rw.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/wp3register.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aso115/Documents/test/wp3/build/CMakeFiles 8
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/wp3register.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aso115/Documents/test/wp3/build/CMakeFiles 0
-.PHONY : CMakeFiles/wp3register.dir/rule
+CMakeFiles/registers_rw.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aso115/Documents/read_write_register/build/CMakeFiles 11
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/registers_rw.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aso115/Documents/read_write_register/build/CMakeFiles 0
+.PHONY : CMakeFiles/registers_rw.dir/rule
 
 # Convenience name for target.
-wp3register: CMakeFiles/wp3register.dir/rule
+registers_rw: CMakeFiles/registers_rw.dir/rule
 
-.PHONY : wp3register
-
-# clean rule for target.
-CMakeFiles/wp3register.dir/clean:
-	$(MAKE) -f CMakeFiles/wp3register.dir/build.make CMakeFiles/wp3register.dir/clean
-.PHONY : CMakeFiles/wp3register.dir/clean
+.PHONY : registers_rw
 
 # clean rule for target.
-clean: CMakeFiles/wp3register.dir/clean
+CMakeFiles/registers_rw.dir/clean:
+	$(MAKE) -f CMakeFiles/registers_rw.dir/build.make CMakeFiles/registers_rw.dir/clean
+.PHONY : CMakeFiles/registers_rw.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/registers_rw.dir/clean
 
 .PHONY : clean
 

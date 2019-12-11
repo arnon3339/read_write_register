@@ -85,20 +85,19 @@ bool    RegisterRW::find_wregister(pru_register *rg)
 
 void		RegisterRW::write_register(const int argc, const char **argv)
 {
-_argc       =   argc;
+    _argc       =   argc;
     _argv       =   argv;
-    int board               =   0;
     if (isdigit(*(*(_argv) + 2)) && 
-            (board   =   *(*(_argv) + 2) - '0') < 4 && !*(*(_argv) + 3))
+            (_pruid   =   *(*(_argv) + 2) - '0') < 4 && !*(*(_argv) + 3))
     {
-        if (board)
+        if (_pruid)
             std::cout << "Increasing IP address" << std::endl;
         _argv++;
         write_option();
     }
     else if ((*(*(_argv) + 2) - '0') > 4)
     {
-        std::cerr << "Error: Invalid specify board" << std::endl;
+        std::cerr << "Error: Invalid specify _pruid" << std::endl;
         exit(EXIT_FAILURE);
     }
     else

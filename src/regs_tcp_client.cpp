@@ -74,8 +74,8 @@ void	RegsTCPClient::start()
   	boost::asio::write(_socket, boost::asio::buffer(_request, _reqs_length), error );
 	if( error ) 
     	std::cout << "send failed: " << error.message() << std::endl;
-  	else 
-    	std::cout << "send correct!" << std::endl;
+  	else;
+    	//std::cout << "send correct!" << std::endl;
 
 	boost::asio::read(_socket, boost::asio::buffer(_buffer, _reqs_length), 
 		boost::asio::transfer_all(), error );
@@ -99,17 +99,17 @@ void	RegsTCPClient::disconnect()
 void	RegsTCPClient::send()
 {
 	int i;
-	printf("Send :");
+	std::cout << std::setw(10) << std::left << "send" << ": ";
 	for (int i = 0; i < _reqs_length; i++)
-			printf("0x%X\t", _request[i]);
+			printf("0x%.2X\t", _request[i]);
 	printf("\n");
 
 	boost::system::error_code error;
   	boost::asio::write(_socket, boost::asio::buffer(_request, _reqs_length), error );
 	if( error ) 
     	std::cout << "send failed: " << error.message() << std::endl;
-  	else 
-    	std::cout << "send correct!" << std::endl;
+  	else ;
+    	// std::cout << "send correct!" << std::endl;
 
 	boost::asio::read(_socket, boost::asio::buffer(_buffer, _reqs_length), 
 		boost::asio::transfer_all(), error );
@@ -118,9 +118,9 @@ void	RegsTCPClient::send()
     	std::cout << "receive failed: " << error.message() << std::endl;
   	else 
 	{
-		printf("Receive :");
+		std::cout << std::setw(10) << std::left << "receive" << ": ";
 		for (int i = 0; i < _reqs_length; i++)
-			printf("0x%X\t", _buffer[i]);
+			printf("0x%.2X\t", _buffer[i]);
 	}	printf("\n");
 		
 }
@@ -193,8 +193,8 @@ void	RegsTCPClient::start_all(std::vector<pru_register*>   *rgvec)
 	boost::asio::write(_socket, boost::asio::buffer(_request, _reqs_length), error );
 	if( error ) 
 		std::cout << "send failed: " << error.message() << std::endl;
-	else 
-		std::cout << "send correct!" << std::endl;
+	else ;
+		// std::cout << "send correct!" << std::endl;
 
 	boost::asio::read(_socket, boost::asio::buffer(_buffer, _reqs_length), 
 		boost::asio::transfer_all(), error );

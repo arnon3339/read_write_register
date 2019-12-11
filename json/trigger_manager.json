@@ -8,7 +8,7 @@
         "reset": "async",
         "comp_library": "axi"
     },
-    "baseaddr": "0x82000000",
+    "baseaddr": "0x24220000",
     "register": [
         {
             "name": "status",
