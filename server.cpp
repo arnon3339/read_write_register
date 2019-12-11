@@ -52,8 +52,8 @@ public:
   void handle_read(const boost::system::error_code& err, size_t bytes_transferred)
   {
     if (!err && bytes_transferred) {
-        for (int i = 0; i < 13; i++)
-         printf("%d\n", data[i]);
+        for (int i = 0; i < 20; i++)
+         printf("0x%.2X\n", data[i]);
     } else {
          std::cerr << "error: " << err.message() << std::endl;
          sock.close();
