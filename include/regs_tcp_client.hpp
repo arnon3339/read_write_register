@@ -18,6 +18,9 @@ public:
     // Constructors
     RegsTCPClient();
     RegsTCPClient(boost::asio::io_service &service,
+					const std::string &host, 
+                    const int port);
+    RegsTCPClient(boost::asio::io_service &service,
                     const std::string &name, const std::string &host, 
                     const int port);
 
@@ -41,12 +44,20 @@ public:
     void start();
 
     // Start all modules
-    void start_all(RegisterModule *mds, const int numbofmds);
-    void start_all(std::vector<RegisterModule*> *mdvec, const char mode = 's',
+    void start_all(RegisterModule *mds, const int numbofmds, 
                     const uint8_t seqnum = 0x00);
+    void start_all(std::vector<RegisterModule*> *mdvec, const uint8_t seqnum = 0x00, 
+                    const char mode = 'c'
+                    );
 
+    
     void start_all(std::vector<pru_register*>   *rgvec);
 
+    // send writing date
+    void    send();
+
+    //  connect socket
+    void    connect();
 
     // get and set method
     void            set_host(const std::string &host);
@@ -60,8 +71,11 @@ public:
     void            set_reqs(uint8_t *reqs, int num_reqs);
     uint8_t         *get_reqs();
     void            set_module(RegisterModule *md);
+    void            set_spmodule(RegisterModule *md);
     void            set_reg(pru_register *reg);
+    void            set_wreg(pru_register *reg);
     int             get_reqslength();
+    void            disconnect();
 
 private:
     // Connect
@@ -71,9 +85,6 @@ private:
     void check_deadline();
     // Stop
     void    stop();
-
-    // Send
-    void    send();
 
     // Receive
     void    receive();

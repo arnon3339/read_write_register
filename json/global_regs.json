@@ -1,0 +1,166 @@
+{
+    "name": "global_regs",
+    "description": "Global registers for version checks and basic system control.",
+    "bus": {
+        "type": "axi",
+        "addr_width": 32,
+        "data_width": 32,
+        "reset": "async",
+        "comp_library": "axi"
+    },
+    "baseaddr": "0x8ffff000",
+    "register": [
+        {
+            "name": "date_code",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x0",
+            "reset": "0x0",
+            "description": "The time of Vivado-project creation: 2-digit year, 2-digit month, 2-digit day, 2-digit hour."
+        },
+        {
+            "name": "hash_code",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x4",
+            "reset": "0x0",
+            "description": "Hash of commit-version used to build Vivado-project."
+        },
+        {
+            "name": "led_blinky",
+            "mode": "rw",
+            "type": "sl",
+            "address": "0x8",
+            "reset": "0x1",
+            "description": "Enables blinking of LEDs that confirm successful FPGA programming. Can be turned off to confirm AXI communication."
+        },
+        {
+            "name": "reset_bank_bitslice",
+            "mode": "rw",
+            "type": "fields",
+            "address": "0xc",
+            "fields": [
+                {
+                    "name": "bank_43",
+                    "type": "sl",
+                    "reset": "0x1",
+                    "description": "Reset RX bank 43."
+                },
+                {
+                    "name": "bank_45",
+                    "type": "sl",
+                    "reset": "0x1",
+                    "description": "Reset RX bank 45."
+                },
+                {
+                    "name": "bank_64",
+                    "type": "sl",
+                    "reset": "0x1",
+                    "description": "Reset RX bank 64."
+                },
+                {
+                    "name": "bank_67",
+                    "type": "sl",
+                    "reset": "0x1",
+                    "description": "Reset RX bank 67."
+                },
+                {
+                    "name": "bank_70",
+                    "type": "sl",
+                    "reset": "0x1",
+                    "description": "Reset RX bank 70."
+                }
+            ],
+            "description": "Reset an entire RX bank."
+        },
+        {
+            "name": "enable_alpide_clock",
+            "mode": "rw",
+            "type": "sl",
+            "address": "0x10",
+            "reset": "0x0",
+            "description": "Enables the 40 MHz clock output to all ALPIDE staves connected to RU."
+        },
+        {
+            "name": "ru_id",
+            "mode": "rw",
+            "type": "slv",
+            "address": "0x14",
+            "length": 6,
+            "reset": "0x0",
+            "description": "Readout Unit identification number. Used in data tagging."
+        },
+        {
+            "name": "max_size",
+            "mode": "rw",
+            "type": "default",
+            "address": "0x18",
+            "reset": "0x100000",
+            "description": "The maximum size of an frame. If the frame is larger than this number, a fatal frame error is triggered, and the processing of the frame is aborted. This error is marked with the Frame Error + Max Size Error flag in the pRU data trailer. If zero, no checking is done."
+        },
+        {
+            "name": "max_wait_time",
+            "mode": "rw",
+            "type": "default",
+            "address": "0x1c",
+            "reset": "0x258",
+            "description": "The maximum time, measured in clock cycles (120 MHz), to wait for a valid word during processing of an frame. If the wait time is larger than this amount of clock cycles, a fatal frame error is triggered, and the processing of the frame is aborted. This error is marked with the Frame Error + Max Wait Time Error flag in the pRU data trailer. If zero, no checking is done."
+        },
+        {
+            "name": "filter_data_word",
+            "mode": "rw",
+            "type": "fields",
+            "address": "0x20",
+            "fields": [
+                {
+                    "name": "comma",
+                    "type": "sl",
+                    "reset": "0x1",
+                    "description": "Filter out 0xBC control words. Requires that the 8b10b decoder also determines as a control character."
+                },
+                {
+                    "name": "idle",
+                    "type": "sl",
+                    "reset": "0x1",
+                    "description": "Filter out 0xFF."
+                }
+            ],
+            "description": "Decides wether the corresponding word should be filtered out of the stream during processing an frame."
+        },
+        {
+            "name": "empty_frame_compression",
+            "mode": "rw",
+            "type": "slv",
+            "address": "0x24",
+            "length": 16,
+            "reset": "0xFFFF",
+            "description": "Compress the number of pRU Empty Words transmitted. The value determines how many CONSECUTIVE empty frames required before transmitting a pRU Empty Word. Empty frames that are not in a consecutive sequence that have at least this many frames, will be dropped with no other action than incrementing frame ID. If this register is set to zero, NO empty frame words are written."
+        },
+        {
+            "name": "check_id",
+            "mode": "rw",
+            "type": "sl",
+            "address": "0x28",
+            "reset": "0x1",
+            "description": "When asserted, protocol checker will require that the ALPIDE header has the correct chip ID before starting a frame. This may prevent some fake frames under jitter-circumstances right before an actual frame is ready on the chip, and also assures that the pRU data will match the actual physical chip ID."
+        },
+        {
+            "name": "DPA_delta",
+            "mode": "rw",
+            "type": "slv",
+            "address": "0x2c",
+            "length": 7,
+            "reset": "0x8",
+            "description": "The amount the DPA logic increments or decrements the line delay (in taps) in every adjustment operation. WARNING: Larger than 8 might cause glitches in RX_BITSLICE primitives. Do not change if you do not know what you're doing!"
+        },
+        {
+            "name": "taps",
+            "mode": "rw",
+            "type": "slv",
+            "address": "0x30",
+            "length": 9,
+            "reset": "0x0",
+            "description": "If not zero, force a number of bitslice delay taps to yield a half unit interval. Should never be used if you don't know what you're doing!"
+        }
+    ]
+}

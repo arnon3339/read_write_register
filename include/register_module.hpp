@@ -2,6 +2,7 @@
 #define REGISTER_MODULE_HPP 1
 
 #include <string>
+#include <vector>
 #include "pru_register.hpp"
 
 class RegisterModule 
@@ -9,7 +10,9 @@ class RegisterModule
 public:
     // Constructors
     RegisterModule ();
-    RegisterModule (const std::string &name);
+    RegisterModule (const std::string &regname);
+    RegisterModule (std::string **regsname);
+    RegisterModule (std::vector<pru_register*> *rgvec);
     RegisterModule (const int n);
 
     // Deconstructors
@@ -35,13 +38,13 @@ public:
 
 
 private:
-    int             _numregs;
-    uint32_t        _baseaddr;
-    uint8_t         _seqnum;
-    pru_register    *_pruregs;
-    uint8_t         *_module_request;
-    uint8_t         *_addr;
-    std::string     _name;
+    int                                     _numregs;
+    uint32_t                                _baseaddr;
+    uint8_t                                 _seqnum;
+    pru_register                            *_pruregs;
+    uint8_t                                 *_module_request;
+    uint8_t                                 *_addr;
+    std::string                             _name;
 };
 
 #endif

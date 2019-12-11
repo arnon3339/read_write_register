@@ -12,6 +12,14 @@
 
 /*-<o>-<x>-<O>-<X>-<O>-<x>-<o>-* Constructors *-<o>-<x>-<O>-<X>-<O>-<x>-<o>-*/
 RegsTCPClient::RegsTCPClient(boost::asio::io_service &service,
+					const std::string &host, 
+                    const int port)
+: _reqs_length(0), _ioservice(service), _name(""), _host(host), _port(port),
+ _socket(service), _reg(0), _regmd(0), 
+ _endpoint( boost::asio::ip::address::from_string(host), port )
+{}
+
+RegsTCPClient::RegsTCPClient(boost::asio::io_service &service,
                     const std::string &name, const std::string &host, 
                     const int port)
 : _reqs_length(0), _ioservice(service), _name(name), _host(host), _port(port),
@@ -83,8 +91,46 @@ void	RegsTCPClient::start()
   	
 }
 
-void	RegsTCPClient::start_all(std::vector<RegisterModule*> *mdvec, const char mode,
-                    			const uint8_t seqnum)
+void	RegsTCPClient::disconnect()
+{
+	_socket.close();
+}
+
+void	RegsTCPClient::send()
+{
+	int i;
+	printf("Send :");
+	for (int i = 0; i < _reqs_length; i++)
+			printf("0x%X\t", _request[i]);
+	printf("\n");
+
+	boost::system::error_code error;
+  	boost::asio::write(_socket, boost::asio::buffer(_request, _reqs_length), error );
+	if( error ) 
+    	std::cout << "send failed: " << error.message() << std::endl;
+  	else 
+    	std::cout << "send correct!" << std::endl;
+
+	boost::asio::read(_socket, boost::asio::buffer(_buffer, _reqs_length), 
+		boost::asio::transfer_all(), error );
+
+	if( error && error != boost::asio::error::eof ) 
+    	std::cout << "receive failed: " << error.message() << std::endl;
+  	else 
+	{
+		printf("Receive :");
+		for (int i = 0; i < _reqs_length; i++)
+			printf("0x%X\t", _buffer[i]);
+	}	printf("\n");
+		
+}
+void	RegsTCPClient::connect()
+{
+	_socket.connect(_endpoint);
+}
+
+void	RegsTCPClient::start_all(std::vector<RegisterModule*> *mdvec,
+                    			const uint8_t seqnum, const char mode)
 {
 	int i, nummds;
 	const uint8_t *buff	=	_buffer;
@@ -119,6 +165,23 @@ void	RegsTCPClient::start_all(std::vector<RegisterModule*> *mdvec, const char mo
 	}	
 }
 
+void	RegsTCPClient::start_all(RegisterModule *mds, const int numofmds,
+                    			const uint8_t seqnum)
+{
+	int i;
+	const uint8_t *buff	=	_buffer;
+	buff	+=	3;
+	_genreq.gen_read_modules(mds, numofmds, seqnum);
+	set_reqs(_genreq.get_request(), _genreq.get_reqlength());
+	_reg	=	0;
+	_regmd	=	0;
+	start();
+	for (i = 0; i < numofmds; i++)
+	{
+		buff	+=	i? 5 * ((mds - 1)->get_numofregs()): 0;	
+		mds++->set_mdvals(buff);
+	}	
+}
 
 void	RegsTCPClient::start_all(std::vector<pru_register*>   *rgvec)
 {
@@ -199,6 +262,27 @@ void	RegsTCPClient::set_module(RegisterModule *md)
 	_reqs_length	=	_genreq.get_reqlength();
 
 }
+
+void	RegsTCPClient::set_spmodule(RegisterModule *md)
+{
+	_reg	=	0;
+	_regmd	=	md;
+	_genreq.gen_read_spmodule(_regmd);
+	_request		=	_genreq.get_request();
+	_reqs_length	=	_genreq.get_reqlength();
+
+}
+
+void	RegsTCPClient::set_wreg(pru_register *reg)
+{
+	_regmd	=	0;
+	_reg	=	reg;
+	_genreq.gen_write_register(_reg);
+	_request		=	_genreq.get_request();
+	_reqs_length	=	_genreq.get_reqlength();
+	
+}
+
 void	RegsTCPClient::set_reg(pru_register *reg)
 {
 	_regmd	=	0;

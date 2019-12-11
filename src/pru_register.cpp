@@ -1,3 +1,6 @@
+#include <string>
+#include <fstream>
+#include <iostream>
 #include "pru_register.hpp"
 
 void fill_values(std::vector<pru_register*> *regsvec, const uint8_t *buff)
@@ -11,3 +14,5 @@ void fill_values(std::vector<pru_register*> *regsvec, const uint8_t *buff)
             regsvec->at(i)->val[j] =   *buff++;
     }
 }
+
+

@@ -1,0 +1,179 @@
+{
+    "name": "offload",
+    "description": "Offloading data from alpide_data modules, and stores them in AXI Stream FIFO for offloading via DMA. The module selects a alpide_data module for offloading based on the number of words stored in the alpide_data buffer FIFO. The thresholds for this can be set by registers. The module supports two modes: frame-based, and non-frame based. Frame-based mode will read an entire frame from an alpide_data module before evaluating to read from another, even though not a full frame is yet store in the selected alpide_data module. This may be less efficient, but the resulting data do not mix between frames from different ALPIDE chips. The non-frame mode strictly follows the threshold register num_words_offloaded registers, and will read out the number of words specified in these registers.",
+    "bus": {
+        "type": "axi",
+        "addr_width": 32,
+        "data_width": 32,
+        "reset": "async",
+        "comp_library": "axi"
+    },
+    "baseaddr": "0x84a10000",
+    "register": [
+        {
+            "name": "enable_offload",
+            "mode": "rw",
+            "type": "sl",
+            "address": "0x0",
+            "reset": "0x0",
+            "description": "Enable offload state machine. If unasserted, no data is read out from ALPIDE_DATA buffer FIFOs."
+        },
+        {
+            "name": "idle",
+            "mode": "ro",
+            "type": "sl",
+            "address": "0x4",
+            "reset": "0x0",
+            "description": "Is low whenever there are more data to transmit."
+        },
+        {
+            "name": "test_mode",
+            "mode": "rw",
+            "type": "fields",
+            "address": "0x8",
+            "fields": [
+                {
+                    "name": "enable_test_mode",
+                    "type": "sl",
+                    "description": "Enable test mode."
+                },
+                {
+                    "name": "test_word_interval",
+                    "type": "slv",
+                    "length": 31,
+                    "description": "The clock cycle interval between each testword. 0 gives 128bit x 120MHz, 1 gives 128bit x 60MHz, etc."
+                }
+            ],
+            "description": "Test offload by filling FIFO with counter value."
+        },
+        {
+            "name": "num_test_words",
+            "mode": "rw",
+            "type": "default",
+            "address": "0xc",
+            "reset": "0x400",
+            "description": "Number of words to be stored in offload FIFO in test mode. Last word is written with tlast."
+        },
+        {
+            "name": "fifo_usage",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x10",
+            "reset": "0x0",
+            "description": "Number of words stored in the FIFO. An empty FIFO equals 2 because of the implementation of the AXI STREAM FIFO."
+        },
+        {
+            "name": "num_wait",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x14",
+            "reset": "0x0",
+            "description": "Number of times waiting for FIFO to have space for writing."
+        },
+        {
+            "name": "frame_based_offload",
+            "mode": "rw",
+            "type": "sl",
+            "address": "0x18",
+            "reset": "0x1",
+            "description": "If enabled, the offload module will read a complete frame from an ALPIDE_DATA module buffer FIFO before reading from another ALPIDE_DATA module. Reduced efficiency, but ensures that no data is mixed between ALPIDE chips. However, mixed frames may be separated from each other in software, because of the pRU data format structure."
+        },
+        {
+            "name": "tlast_threshold",
+            "mode": "rw",
+            "type": "default",
+            "address": "0x1c",
+            "reset": "0x100",
+            "description": "Threshold for number of 128 bit words written to FIFO before tlast is asserted. This number must be smaller than the DMA length register value to avoid DMA error."
+        },
+        {
+            "name": "assert_tlast_when_empty",
+            "mode": "rw",
+            "type": "sl",
+            "address": "0x20",
+            "reset": "0x0",
+            "description": "Assert TLAST when the last word is read out of the FIFO. This causes the DMA to assert an IRQ, and ensures that no data is lost in the buffer. Can be replaced by flush_buffer assertion."
+        },
+        {
+            "name": "prog_empty_threshold",
+            "mode": "rw",
+            "type": "fields",
+            "address": "0x24",
+            "fields": [
+                {
+                    "name": "threshold",
+                    "type": "slv",
+                    "length": 11,
+                    "reset": "0x32",
+                    "description": "The amount of words written that cause the prog_empty signal to be un-asserted."
+                },
+                {
+                    "name": "num_words_offloaded",
+                    "type": "slv",
+                    "length": 11,
+                    "reset": "0x30",
+                    "description": "The amount of words that will be read from the module when the prog_empty signal is detected as un-asserted. Must be lower than the threshold."
+                }
+            ],
+            "description": "Sets the value for the prog_empty threshold. The threshold is used for choosing between alpide_data modules for offloading, however, the num_words_offloaded field is only applicable for non-frame-based offload."
+        },
+        {
+            "name": "prog_full_threshold",
+            "mode": "rw",
+            "type": "fields",
+            "address": "0x28",
+            "fields": [
+                {
+                    "name": "threshold",
+                    "type": "slv",
+                    "length": 11,
+                    "reset": "0x3E8",
+                    "description": "The amount of words written that cause the prog_full signal to be asserted."
+                },
+                {
+                    "name": "num_words_offloaded",
+                    "type": "slv",
+                    "length": 11,
+                    "reset": "0x1F4",
+                    "description": "The amount of words that will be read from the module when the prog_full signal is detected as asserted. Must be lower than the threshold."
+                }
+            ],
+            "description": "Sets the value for the prog_full threshold. The threshold is used for choosing between alpide_data modules for offloading, however, the num_words_offloaded field is only applicable for non-frame-based offload."
+        },
+        {
+            "name": "full_num_words_offloaded",
+            "mode": "rw",
+            "type": "slv",
+            "address": "0x2c",
+            "length": 11,
+            "reset": "0x3E8",
+            "description": "The amount of words that will be read from the module when the full signal is detected as asserted. Must be lower than the FIFO write depth (TBD)."
+        },
+        {
+            "name": "reset_alpide_data_fifo",
+            "mode": "rw",
+            "type": "sl",
+            "address": "0x30",
+            "reset": "0x0",
+            "description": "Resets the alpide_data module buffer FIFOs. Must be asserted when changing the values of the prog_full and prog_empty thresholds. Be careful to not assert while data is being processed."
+        },
+        {
+            "name": "reset_offload_fifo",
+            "mode": "pulse",
+            "num_cycles": 10,
+            "type": "sl",
+            "address": "0x34",
+            "reset": "0x0",
+            "description": "Resets the offload FIFO. Also resets num_wait counter."
+        },
+        {
+            "name": "flush_buffer",
+            "mode": "pulse",
+            "num_cycles": 1,
+            "type": "sl",
+            "address": "0x38",
+            "reset": "0x0",
+            "description": "Causes a delimiter word (all ones) to be written to the output buffer FIFO with TLAST asserted. Will provoke the DMA to assert an IRQ so the transfer is fulfilled. Can be used instead of assert_tlast_when_empty register."
+        }
+    ]
+}

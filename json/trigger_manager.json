@@ -1,0 +1,206 @@
+{
+    "name": "trigger_manager",
+    "description": "Management of global trigger and pulse signals. Also functions as a synchronizer for both ALPIDEs and RUs. Can transmit various reset to all ALPIDEs connected to RU, and reset the RU absolute time trackker. Module has 3 signal inputs that is to be connected to external FPGA IO: trigger_init (initiates trigger or pulse sequence), sync (transmits BCRST to all ALPIDEs and resets RU absolute time), spill_inc (increments SPILL ID). The module generates a 25 ns pulse from each external signal, so the external signal length is arbitrary as long as the period is over 25 ns. The module is also used for tagging pRU data, see register specifications.",
+    "bus": {
+        "type": "axi",
+        "addr_width": 32,
+        "data_width": 32,
+        "reset": "async",
+        "comp_library": "axi"
+    },
+    "baseaddr": "0x82000000",
+    "register": [
+        {
+            "name": "status",
+            "mode": "ro",
+            "type": "fields",
+            "address": "0x0",
+            "fields": [
+                {
+                    "name": "idle",
+                    "type": "sl",
+                    "reset": "0x1",
+                    "description": "Indicates that the manager is free to receive new commands."
+                },
+                {
+                    "name": "error",
+                    "type": "sl",
+                    "description": "Indicates that the register settings prevents any commands to be transmitted."
+                }
+            ],
+            "description": "Status of trigger/pulse transmits."
+        },
+        {
+            "name": "mode",
+            "mode": "rw",
+            "type": "slv",
+            "address": "0x4",
+            "length": 2,
+            "reset": "0x0",
+            "description": "Controls whether transmitting trigger or pulse opcode. 0 = trigger, 1 = pulse, 2 = pulse and trigger combo, 3 = no action."
+        },
+        {
+            "name": "num_triggers",
+            "mode": "rw",
+            "type": "default",
+            "address": "0x8",
+            "reset": "0x1",
+            "description": "The number of trigger/pulse/pulse-trigger-combos to be transmitted."
+        },
+        {
+            "name": "pre_cmd_delay",
+            "mode": "rw",
+            "type": "default",
+            "address": "0xc",
+            "reset": "0x0",
+            "description": "Optional delay before the transmission of commands after initiation (either register or external signal). Not added to delay between command in train (when num_triggers is larger than one)."
+        },
+        {
+            "name": "trigger_delay",
+            "mode": "rw",
+            "type": "default",
+            "address": "0x10",
+            "reset": "0xE",
+            "description": "For mode(0) - The number of clock cycles (40 MHz) between each trigger command. Minimum 14 (time required to complete operation)."
+        },
+        {
+            "name": "pulse_delay",
+            "mode": "rw",
+            "type": "default",
+            "address": "0x14",
+            "reset": "0xE",
+            "description": "For mode(1,2) - The number of clock cycles (40 MHz) between each pulse command. Minimum 14 (time required to complete operation). For mode(2,3) this must be larger than pulse_trigger_gap + 14!"
+        },
+        {
+            "name": "pulse_trigger_delay",
+            "mode": "rw",
+            "type": "default",
+            "address": "0x18",
+            "reset": "0xE",
+            "description": "For mode(2) - The number of clock cycles (40 MHz) between the pulse and the trigger command. Minimum 14 (time required to complete operation)."
+        },
+        {
+            "name": "trigger_init",
+            "mode": "pulse",
+            "num_cycles": 1,
+            "type": "sl",
+            "address": "0x1c",
+            "reset": "0x0",
+            "description": "Initiates the command transmission process for all modes."
+        },
+        {
+            "name": "num_trains",
+            "mode": "rw",
+            "type": "default",
+            "address": "0x20",
+            "reset": "0x1",
+            "description": "The number of trains to be transmitted."
+        },
+        {
+            "name": "trains_delay",
+            "mode": "rw",
+            "type": "default",
+            "address": "0x24",
+            "reset": "0xE",
+            "description": "The delay between each train - from train stop to it begins again - in 40 MHz clock cycles. Minimum 14 (time required to complete operation)."
+        },
+        {
+            "name": "alpide_grst",
+            "mode": "pulse",
+            "num_cycles": 1,
+            "type": "sl",
+            "address": "0x28",
+            "reset": "0x0",
+            "description": "Transmit the GRST opcode to all ALPIDEs."
+        },
+        {
+            "name": "alpide_prst",
+            "mode": "pulse",
+            "num_cycles": 1,
+            "type": "sl",
+            "address": "0x2c",
+            "reset": "0x0",
+            "description": "Transmit the PRST opcode to all ALPIDEs."
+        },
+        {
+            "name": "alpide_bcrst",
+            "mode": "pulse",
+            "num_cycles": 1,
+            "type": "sl",
+            "address": "0x30",
+            "reset": "0x0",
+            "description": "Transmit the BCRST opcode to all ALPIDEs."
+        },
+        {
+            "name": "alpide_rorst",
+            "mode": "pulse",
+            "num_cycles": 1,
+            "type": "sl",
+            "address": "0x34",
+            "reset": "0x0",
+            "description": "Transmit the RORST opcode to all ALPIDEs."
+        },
+        {
+            "name": "trigger_source",
+            "mode": "rw",
+            "type": "slv",
+            "address": "0x38",
+            "length": 2,
+            "reset": "0x3",
+            "description": "Optional, used for data tagging. The source of the ALPIDE trigger signal. 0x0 = ALPIDE Internal Strobe Sequencer, 0x1 = External pRU Hardware Signal, 0x2 = Software trigger. Used in data tagging, 0x3 = FPGA Trigger Manager."
+        },
+        {
+            "name": "alpide_mode",
+            "mode": "rw",
+            "type": "slv",
+            "address": "0x3c",
+            "length": 1,
+            "reset": "0x1",
+            "description": "Optional, used for data tagging. The readout mode the ALPIDEs are configured in. 0x0 = TRIGGERED mode, 0x1 = CONTINUOUS mode. Used in data tagging."
+        },
+        {
+            "name": "absolute_time",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x40",
+            "reset": "0x0",
+            "description": "32-bit counter value of 120MHz system clock. Used to tag data."
+        },
+        {
+            "name": "reset_time",
+            "mode": "pulse",
+            "num_cycles": 1,
+            "type": "sl",
+            "address": "0x44",
+            "reset": "0x0",
+            "description": "Resets the absolute time register."
+        },
+        {
+            "name": "spill_id",
+            "mode": "ro",
+            "type": "slv",
+            "address": "0x48",
+            "length": 16,
+            "reset": "0x0",
+            "description": "The ID of current spill."
+        },
+        {
+            "name": "increment_spill_id",
+            "mode": "pulse",
+            "num_cycles": 1,
+            "type": "sl",
+            "address": "0x4c",
+            "reset": "0x0",
+            "description": "Increments the spill ID register."
+        },
+        {
+            "name": "reset_spill_id",
+            "mode": "pulse",
+            "num_cycles": 1,
+            "type": "sl",
+            "address": "0x50",
+            "reset": "0x0",
+            "description": "Increments the spill ID register."
+        }
+    ]
+}

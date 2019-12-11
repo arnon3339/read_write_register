@@ -1,0 +1,334 @@
+{
+    "name": "alpide_data",
+    "description": "Control and status of ALPIDE data readout.",
+    "bus": {
+        "type": "axi",
+        "addr_width": 32,
+        "data_width": 32,
+        "reset": "async",
+        "comp_library": "axi"
+    },
+    "baseaddr": "0x8f010000",
+    "baseaddr_offset": "0x1000",
+    "register": [
+        {
+            "name": "run_settings",
+            "mode": "rw",
+            "type": "fields",
+            "address": "0x0",
+            "fields": [
+                {
+                    "name": "run",
+                    "type": "sl",
+                    "description": "De-asserts DPA channel reset. Enables 8B10B decoder after 100 clock cycles."
+                },
+                {
+                    "name": "test_mode",
+                    "type": "sl",
+                    "description": "Enable test mode functionality - counting of words matching defined test vectors or comma word. Will disable all alpide_data functionality that occurs after 8B10B decoding i.e. no protocol checking, data tagging and buffering."
+                },
+                {
+                    "name": "stave_id",
+                    "type": "slv",
+                    "length": 4,
+                    "description": "Stave ID - used for tagging pRU data words."
+                },
+                {
+                    "name": "chip_id",
+                    "type": "slv",
+                    "length": 4,
+                    "description": "Chip ID - used for tagging pRU data words."
+                },
+                {
+                    "name": "prbs_test",
+                    "type": "sl",
+                    "description": "Enable PRBS-7 test mode functionality - counting number of PRBS-7 errors. test_mode bit must also be asserted."
+                },
+                {
+                    "name": "hs_rate",
+                    "type": "slv",
+                    "length": 2,
+                    "reset": "0x3",
+                    "description": "Set HS-link rate. '11' = 1.2Gb/s, '10' = 1.2Gb/s, '01' = 0.6Gb/s, '00' = 0.4Gb/s."
+                }
+            ],
+            "description": "Run settings register."
+        },
+        {
+            "name": "run_status",
+            "mode": "ro",
+            "type": "fields",
+            "address": "0x4",
+            "fields": [
+                {
+                    "name": "data_format_ver",
+                    "type": "slv",
+                    "length": 8,
+                    "reset": "0x1",
+                    "description": "The version of the data format."
+                },
+                {
+                    "name": "last_sample_word",
+                    "type": "slv",
+                    "length": 10,
+                    "description": "The latest 10-bit word sampled. Test mode only."
+                },
+                {
+                    "name": "last_decode_word",
+                    "type": "slv",
+                    "length": 8,
+                    "description": "The latest 8-bit word decoded. Test mode only."
+                },
+                {
+                    "name": "data_formatter_status",
+                    "type": "slv",
+                    "length": 2,
+                    "description": "0 = idle, 1 = processing frame, 2 = waiting for free space (buffer full)."
+                },
+                {
+                    "name": "buffer_status",
+                    "type": "slv",
+                    "length": 3,
+                    "description": "0 = empty, 1 = almost empty, 2 = prog empty, 3 = some data, 4 = prog full, 5 = full."
+                }
+            ],
+            "description": "Run status register."
+        },
+        {
+            "name": "run_status_2",
+            "mode": "ro",
+            "type": "fields",
+            "address": "0x8",
+            "fields": [
+                {
+                    "name": "loss_of_signal",
+                    "type": "sl",
+                    "description": "DPA logic lost signal."
+                },
+                {
+                    "name": "fifo_empty",
+                    "type": "sl",
+                    "description": "CDC FIFO is empty."
+                },
+                {
+                    "name": "enable_alignment",
+                    "type": "sl",
+                    "description": "Data processing is started."
+                },
+                {
+                    "name": "data_aligned",
+                    "type": "sl",
+                    "description": "Data is aligned and 8B10B decoding started."
+                }
+            ],
+            "description": "Run status register 2."
+        },
+        {
+            "name": "reset_counters",
+            "mode": "pulse",
+            "num_cycles": 1,
+            "type": "sl",
+            "address": "0xc",
+            "reset": "0x0",
+            "description": "Resets all counters in module."
+        },
+        {
+            "name": "num_error_0",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x10",
+            "reset": "0x0",
+            "description": "Number of errors in test mode - bits 31:0."
+        },
+        {
+            "name": "num_error_1",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x14",
+            "reset": "0x0",
+            "description": "Number of errors in test mode - bits 63:32."
+        },
+        {
+            "name": "num_correct_0",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x18",
+            "reset": "0x0",
+            "description": "Number of correct words in test mode - bits 31:0."
+        },
+        {
+            "name": "num_correct_1",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x1c",
+            "reset": "0x0",
+            "description": "Number of correct words in test mode - bits 63:32."
+        },
+        {
+            "name": "num_prbs_error",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x20",
+            "reset": "0x0",
+            "description": "Number of PRBS-7 errors in PRBS test mode."
+        },
+        {
+            "name": "num_decode_error_0",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x24",
+            "reset": "0x0",
+            "description": "Number of 8B10B decode errors observed - bits 31:0."
+        },
+        {
+            "name": "num_decode_error_1",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x28",
+            "reset": "0x0",
+            "description": "Number of 8B10B decode errors observed - bits 63:32."
+        },
+        {
+            "name": "num_protocol_error",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x2c",
+            "reset": "0x0",
+            "description": "Number of protocol errors observed. Protocol errors are all decode errors observed during processing of an frame, but also all other protocol errors e.g. a double busy on assertion."
+        },
+        {
+            "name": "num_frame_error",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x30",
+            "reset": "0x0",
+            "description": "Number of frames with errors observed. These errors are fatal, i.e. they cause the processing of the frame to be aborted and an immidiate generation of the pRU trailer word."
+        },
+        {
+            "name": "num_frames",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x34",
+            "reset": "0x0",
+            "description": "Number of ALPIDE frames registered. Is incremented when the protocol checker is asserting that processing of a complete frame is done. However, this may include frames with fatal errors."
+        },
+        {
+            "name": "num_empty_frames",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x38",
+            "reset": "0x0",
+            "description": "Number of empty ALPIDE frames registered."
+        },
+        {
+            "name": "num_busy",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x3c",
+            "reset": "0x0",
+            "description": "Number of busys observed."
+        },
+        {
+            "name": "num_busy_violation",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x40",
+            "reset": "0x0",
+            "description": "Number of busy violation events indicated by the ALPIDE chip."
+        },
+        {
+            "name": "num_flushed_incomplete",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x44",
+            "reset": "0x0",
+            "description": "Number of flushed incomplete events indicated by the ALPIDE chip."
+        },
+        {
+            "name": "num_strobe_extended",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x48",
+            "reset": "0x0",
+            "description": "Number of strobe extended framing windows indicated by the ALPIDE chip."
+        },
+        {
+            "name": "num_busy_transition",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x4c",
+            "reset": "0x0",
+            "description": "Number of busy transitions indicated by the ALPIDE chip."
+        },
+        {
+            "name": "num_data_overrun",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x50",
+            "reset": "0x0",
+            "description": "Number of data overruns indicated by the ALPIDE chip."
+        },
+        {
+            "name": "num_fatal_condition",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x54",
+            "reset": "0x0",
+            "description": "Number of fatal conditions indicated by the ALPIDE chip."
+        },
+        {
+            "name": "num_buffer_overflow",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x58",
+            "reset": "0x0",
+            "description": "Number of buffer overflows observed."
+        },
+        {
+            "name": "num_frames_dropped",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x5c",
+            "reset": "0x0",
+            "description": "Number of full frames dropped because over buffer overflow."
+        },
+        {
+            "name": "num_fake_frames",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x60",
+            "reset": "0x0",
+            "description": "Number of ALPIDE frames rejected because of mistmatch of chip ID. Will only be counted if global_regs/check_id register is set."
+        },
+        {
+            "name": "test_vectors",
+            "mode": "rw",
+            "type": "fields",
+            "address": "0x64",
+            "fields": [
+                {
+                    "name": "test_vector_0",
+                    "type": "slv",
+                    "length": 8,
+                    "reset": "0xbc",
+                    "description": "Test vector 0."
+                },
+                {
+                    "name": "test_vector_1",
+                    "type": "slv",
+                    "length": 8,
+                    "reset": "0xbc",
+                    "description": "Test vector 1."
+                },
+                {
+                    "name": "test_vector_2",
+                    "type": "slv",
+                    "length": 8,
+                    "reset": "0xbc",
+                    "description": "Test vector 2."
+                }
+            ],
+            "description": "Data matching these words will be considered correct in test mode."
+        }
+    ]
+}

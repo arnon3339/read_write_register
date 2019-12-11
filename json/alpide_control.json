@@ -1,0 +1,199 @@
+{
+    "name": "alpide_control",
+    "description": "ALPIDE slow control management.",
+    "bus": {
+        "type": "axi",
+        "addr_width": 32,
+        "data_width": 32,
+        "reset": "async",
+        "comp_library": "axi"
+    },
+    "baseaddr": "0x8f000000",
+    "baseaddr_offset": "0x1000",
+    "register": [
+        {
+            "name": "write_ctrl",
+            "mode": "rw",
+            "type": "fields",
+            "address": "0x0",
+            "fields": [
+                {
+                    "name": "chipid",
+                    "type": "slv",
+                    "length": 8
+                },
+                {
+                    "name": "opcode",
+                    "type": "slv",
+                    "length": 8
+                }
+            ],
+            "description": "When written to, start the alpide_control state machine. Opcode decides the operation executed."
+        },
+        {
+            "name": "write_address",
+            "mode": "rw",
+            "type": "slv",
+            "address": "0x4",
+            "length": 16,
+            "reset": "0x0",
+            "description": "The ALPIDE chips register address. Must be written before write_ctrl."
+        },
+        {
+            "name": "write_data",
+            "mode": "rw",
+            "type": "slv",
+            "address": "0x8",
+            "length": 16,
+            "reset": "0x0",
+            "description": "Data that is written to ALPIDE register. Must be written before write_ctrl when performing a write operation."
+        },
+        {
+            "name": "stop_bit_requirement",
+            "mode": "rw",
+            "type": "slv",
+            "address": "0xc",
+            "length": 2,
+            "reset": "0x3",
+            "description": "Requirement for the start/stop bit detection. 3 -> All 6 bits (strict - may fail with noisy signal). 2 -> 5 bits. 1 -> 4 bits. 0 -> Not allowed (will revert to 6 bits)."
+        },
+        {
+            "name": "read_status",
+            "mode": "ro",
+            "type": "fields",
+            "address": "0x10",
+            "fields": [
+                {
+                    "name": "all_ok",
+                    "type": "sl"
+                },
+                {
+                    "name": "chip_id_ok",
+                    "type": "sl"
+                },
+                {
+                    "name": "data_l_ok",
+                    "type": "sl"
+                },
+                {
+                    "name": "data_h_ok",
+                    "type": "sl"
+                },
+                {
+                    "name": "chip_id",
+                    "type": "slv",
+                    "length": 8
+                }
+            ],
+            "description": "Read status."
+        },
+        {
+            "name": "read_data",
+            "mode": "ro",
+            "type": "slv",
+            "address": "0x14",
+            "length": 16,
+            "reset": "0x0",
+            "description": "Data returned from ALPIDE."
+        },
+        {
+            "name": "reset_counters",
+            "mode": "pulse",
+            "num_cycles": 1,
+            "type": "sl",
+            "address": "0x18",
+            "reset": "0x0",
+            "description": "Reset control counters."
+        },
+        {
+            "name": "num_broadcasts",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x1c",
+            "reset": "0x0",
+            "description": "Number of broadcasts."
+        },
+        {
+            "name": "num_writes",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x20",
+            "reset": "0x0",
+            "description": "Number of write operations."
+        },
+        {
+            "name": "num_reads",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x24",
+            "reset": "0x0",
+            "description": "Number of read operations."
+        },
+        {
+            "name": "num_opcodes",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x28",
+            "reset": "0x0",
+            "description": "Number of opcodes transmitted."
+        },
+        {
+            "name": "num_trigger_sent",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x2c",
+            "reset": "0x0",
+            "description": "Number of triggers transmitted."
+        },
+        {
+            "name": "num_trigger_not_sent",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x30",
+            "reset": "0x0",
+            "description": "Number of triggers not transmitted."
+        },
+        {
+            "name": "num_wait_exec",
+            "mode": "ro",
+            "type": "default",
+            "address": "0x34",
+            "reset": "0x0",
+            "description": "Number of waits executed."
+        },
+        {
+            "name": "mask_busy",
+            "mode": "rw",
+            "type": "fields",
+            "address": "0x38",
+            "fields": [
+                {
+                    "name": "force_bit",
+                    "type": "sl"
+                },
+                {
+                    "name": "force_value",
+                    "type": "sl",
+                    "description": "'1' -> busy, '0' -> not busy."
+                }
+            ],
+            "description": "Set the busy status by force, either not busy or busy."
+        },
+        {
+            "name": "wait_value",
+            "mode": "rw",
+            "type": "default",
+            "address": "0x3c",
+            "reset": "0x0",
+            "description": "Unused."
+        },
+        {
+            "name": "num_regs",
+            "mode": "rw",
+            "type": "default",
+            "address": "0x40",
+            "reset": "0x0",
+            "description": "Unused."
+        }
+    ]
+}

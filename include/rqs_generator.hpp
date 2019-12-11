@@ -19,11 +19,15 @@ public:
     uint8_t         *get_request();
     int             get_reqlength();
     void            gen_read_module(RegisterModule *module);
+    void            gen_read_spmodule(RegisterModule *module);
+    void            gen_read_modules(RegisterModule *mds, int numofmds,
+                                        const uint8_t seqnum = 0);
+
     void            gen_readmd_register(const pru_register *regs);
     void            gen_write_module();
     void            gen_read_modules(std::vector<RegisterModule*> *mdvec, 
                                         const uint8_t seqnum = 0x00);
-    void            gen_writemd_register(const pru_register *regs);
+    void            gen_write_register(const pru_register *regs);
     bool            is_single();
 
 private:

@@ -1,0 +1,164 @@
+{
+    "global register": [
+     {
+      "name": "ru_id",
+      "type": "rw",
+      "value": ""
+     },
+     {
+      "name": "max_size",
+      "type": "rw",
+      "value": ""
+     },
+     {
+      "name": "max_wait_time",
+      "type": "rw",
+      "value": ""
+     },
+     {
+      "name": "empty_frame_compression",
+      "type": "rw",
+      "value": ""
+     },
+     {
+      "name": "DPA_delta",
+      "type": "rw",
+      "value": ""
+     },
+     {
+      "name": "taps",
+      "type": "rw",
+      "value": ""
+     }
+    ],
+    "offload": [
+     {
+      "name": "test_type",
+      "type": "rw",
+      "value": {
+       "value": ""
+      }
+     },
+     {
+      "name": "num_test_words",
+      "type": "rw",
+      "value": ""
+     },
+     {
+      "name": "frame_based_offload",
+      "type": "rw",
+      "value": ""
+     },
+     {
+      "name": "tlast_threshold",
+      "type": "rw",
+      "value": ""
+     },
+     {
+      "name": "assert_tlast_when_empty",
+      "type": "rw",
+      "value": ""
+     },
+     {
+      "name": "prog_empty_threshold",
+      "type": "rw",
+      "value": {
+       "number of offloaded words": "",
+       "threshold": ""
+      }
+     },
+     {
+      "name": "prog_full_threshold",
+      "type": "rw",
+      "value": {
+       "number of offloaded words": "",
+       "threshold": ""
+      }
+     },
+     {
+      "name": "full_num_words_offloaded",
+      "type": "rw",
+      "value": ""
+     },
+     {
+      "name": "reset_alpide_data_fifo",
+      "type": "rw",
+      "value": ""
+     }
+    ],
+    "trigger manager": [
+     {
+      "name": "mode",
+      "type": "rw",
+      "value": ""
+     },
+     {
+      "name": "num_triggers",
+      "type": "rw",
+      "value": ""
+     },
+     {
+      "name": "pre_cmd_delay",
+      "type": "rw",
+      "value": ""
+     },
+     {
+      "name": "trigger_delay",
+      "type": "rw",
+      "value": ""
+     },
+     {
+      "name": "num_trains",
+      "type": "rw",
+      "value": ""
+     },
+     {
+      "name": "trains_delay",
+      "type": "rw",
+      "value": ""
+     },
+     {
+      "name": "trigger_source",
+      "type": "rw",
+      "value": ""
+     },
+     {
+      "name": "alpide_type",
+      "type": "rw",
+      "value": ""
+     }
+    ],
+    "ALPIDE control": [
+     {
+      "name": "write_ctrl",
+      "type": "rw",
+      "value": {
+       "opcode": "fadsfa"
+      }
+     },
+     {
+      "name": "write_address",
+      "type": "rw",
+      "value": "df"
+     },
+     {
+      "name": "write_data",
+      "type": "rw",
+      "value": "asf"
+     },
+     {
+      "name": "stop_bit_requirement",
+      "type": "rw",
+      "value": "adsf"
+     }
+    ],
+    "ALPIDE data": [
+     {
+      "name": "test_vectors",
+      "type": "rw",
+      "value": {
+       "value": ""
+      }
+     }
+    ]
+   }    
